@@ -1,12 +1,12 @@
 {
     "format_version": 1,
-    "imports":[
+    "imports": [
         {
             "target_table": "T_CLIENTES",
-            "import_settings":{
-                "include_filter":[]
+            "import_settings": {
+                "include_filter": []
             },
-            "source_data":{
+            "source_data": {
                 "data_type": "CSV",
                 "file_name": "T_CLIENTES.csv",
                 "has_header": true,
@@ -18,5 +18,5 @@
                 }
             }
         }
-    ]
+        ]
 }
