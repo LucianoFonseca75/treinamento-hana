@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_ITEM" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_ITEM"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="T_ITENS_COMPRA">
+    <resourceUri>T_ITENS_COMPRA</resourceUri>
+  </DataSource>
+  <DataSource id="T_PRODUTOS">
+    <resourceUri>T_PRODUTOS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PEDIDO_ID"/>
+      <viewAttribute id="ITEM_ID"/>
+      <viewAttribute id="PRODUTO_ID"/>
+      <viewAttribute id="QUANTIDADE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="T_ITENS_COMPRA"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="PRODUTO_ID"/>
+      <viewAttribute id="DESCRICAO"/>
+      <viewAttribute id="PRECO_UNITARIO"/>
+      <viewAttribute id="CUSTO_UNITARIO"/>
+      <viewAttribute id="PESO_UNITARIO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="T_PRODUTOS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PEDIDO_ID"/>
+      <viewAttribute id="ITEM_ID"/>
+      <viewAttribute id="PRODUTO_ID"/>
+      <viewAttribute id="QUANTIDADE"/>
+      <viewAttribute id="PRODUTO_ID_1"/>
+      <viewAttribute id="DESCRICAO"/>
+      <viewAttribute id="PRECO_UNITARIO"/>
+      <viewAttribute id="CUSTO_UNITARIO"/>
+      <viewAttribute id="PESO_UNITARIO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PEDIDO_ID" source="PEDIDO_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUTO_ID" source="PRODUTO_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTIDADE" source="QUANTIDADE"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUTO_ID_1" source="PRODUTO_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRICAO" source="DESCRICAO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRECO_UNITARIO" source="PRECO_UNITARIO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUSTO_UNITARIO" source="CUSTO_UNITARIO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PESO_UNITARIO" source="PESO_UNITARIO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUTO_ID" source="PRODUTO_ID"/>
+    </input>
+    <joinAttribute name="PRODUTO_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" ignoreMultipleOutputsForFilter="false">
+    <viewAttributes>
+      <viewAttribute id="PEDIDO_ID"/>
+      <viewAttribute id="ITEM_ID"/>
+      <viewAttribute id="PRODUTO_ID"/>
+      <viewAttribute id="QUANTIDADE"/>
+      <viewAttribute id="PRODUTO_ID_1"/>
+      <viewAttribute id="DESCRICAO"/>
+      <viewAttribute id="PRECO_UNITARIO"/>
+      <viewAttribute id="CUSTO_UNITARIO"/>
+      <viewAttribute id="PESO_UNITARIO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Peso_Item" datatype="DOUBLE" expressionLanguage="SQL">
+        <formula>ROUND(&quot;PESO_UNITARIO&quot;*&quot;QUANTIDADE&quot;,2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="Preco_Item" datatype="DOUBLE" expressionLanguage="SQL">
+        <formula>ROUND(&quot;PRECO_UNITARIO&quot;*&quot;QUANTIDADE&quot;,2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="Custo_Item" datatype="DOUBLE" expressionLanguage="SQL">
+        <formula>ROUND(&quot;CUSTO_UNITARIO&quot;*&quot;QUANTIDADE&quot;,2)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_1"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_3">
+  <attributes>
+    <attribute id="PEDIDO_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PEDIDO_ID"/>
+      <keyMapping columnObjectName="Projection_3" columnName="PEDIDO_ID"/>
+    </attribute>
+    <attribute id="ITEM_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ITEM_ID"/>
+      <keyMapping columnObjectName="Projection_3" columnName="ITEM_ID"/>
+    </attribute>
+    <attribute id="PRODUTO_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODUTO_ID"/>
+      <keyMapping columnObjectName="Projection_3" columnName="PRODUTO_ID"/>
+    </attribute>
+    <attribute id="QUANTIDADE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUANTIDADE"/>
+      <keyMapping columnObjectName="Projection_3" columnName="QUANTIDADE"/>
+    </attribute>
+    <attribute id="PRODUTO_ID_1" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODUTO_ID_1"/>
+      <keyMapping columnObjectName="Projection_3" columnName="PRODUTO_ID_1"/>
+    </attribute>
+    <attribute id="DESCRICAO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRICAO"/>
+      <keyMapping columnObjectName="Projection_3" columnName="DESCRICAO"/>
+    </attribute>
+    <attribute id="PRECO_UNITARIO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRECO_UNITARIO"/>
+      <keyMapping columnObjectName="Projection_3" columnName="PRECO_UNITARIO"/>
+    </attribute>
+    <attribute id="CUSTO_UNITARIO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUSTO_UNITARIO"/>
+      <keyMapping columnObjectName="Projection_3" columnName="CUSTO_UNITARIO"/>
+    </attribute>
+    <attribute id="PESO_UNITARIO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PESO_UNITARIO"/>
+      <keyMapping columnObjectName="Projection_3" columnName="PESO_UNITARIO"/>
+    </attribute>
+    <attribute id="Peso_Item" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Peso_Item"/>
+      <keyMapping columnObjectName="Projection_3" columnName="Peso_Item"/>
+    </attribute>
+    <attribute id="Preco_Item" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Preco_Item"/>
+      <keyMapping columnObjectName="Projection_3" columnName="Preco_Item"/>
+    </attribute>
+    <attribute id="Custo_Item" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Custo_Item"/>
+      <keyMapping columnObjectName="Projection_3" columnName="Custo_Item"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-204" y="360"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-24" y="360"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-153" y="249"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="158.11767578125"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="182.97509765625"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-153" y="164"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
